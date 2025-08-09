@@ -23,6 +23,7 @@ async fn main() -> Result<(), sqlx::Error> {
 
     let app = Router::new()
         .route("/", get(root))
+        .route("/posts", get(get_posts))
         .layer(Extension(pool));
 
     // run our app with hyper, listening globally on port 5000
@@ -41,7 +42,7 @@ async fn root() -> &'static str {
 async fn get_posts(
     Extension(pool): Extension<Pool<Postgres>>
 ) -> Result<Json<Vec<Post>>, StatusCode> {
-    let posts = sqlx::query_as!(Post, "SELECT id, title, body FROM posts")
+    let posts = sqlx::query_as!(Post, "SELECT id, user_id, title, body FROM posts")
         .fetch_all(&pool)
         .await
         .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
