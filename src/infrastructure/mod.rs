@@ -1,1 +1,5 @@
-pub mod database;
+mod database;
+
+pub use database::{
+    DatabasePool, DatabaseOptions
+};

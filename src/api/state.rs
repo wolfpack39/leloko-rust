@@ -1,5 +1,7 @@
-use crate::infrastructure::database::DatabasePool;
+
 use std::sync::Arc;
+
+use crate::infrastructure::DatabasePool;
 
 pub type SharedState = Arc<AppState>;
 
